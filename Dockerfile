@@ -42,6 +42,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
  
 # BUILD static images, static files will be located at /app/staticfiles
+ENV DJANGO_SECRET_KEY="build-time-dummy-key"
 RUN python -m manage collectstatic --noinput
 
 # Switch to non-root user
@@ -51,4 +52,4 @@ USER appuser
 EXPOSE 8000
 
 # Start the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "nesy_page.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "portfolio.wsgi:application"]
