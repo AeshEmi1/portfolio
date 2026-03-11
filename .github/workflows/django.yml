@@ -12,10 +12,14 @@ on:
         default: true
         type: boolean
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     if: |
-      github.event_name != 'workflow_dispatch' || 
+      github.event_name == 'pull_request' || 
       inputs.run_tests == true
     runs-on: ubuntu-latest
     strategy:
@@ -57,6 +61,9 @@ jobs:
 
   security-scan:
     name: Security Scan (CodeQL)
+    if: |
+      github.event_name == 'pull_request' || 
+      inputs.run_tests == true
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -78,9 +85,8 @@ jobs:
         category: "/language:python"
 
   build-test:
-      needs: test
       if: |
-        github.event_name != 'workflow_dispatch' || 
+        github.event_name == 'pull_request' || 
         inputs.run_tests == true
       runs-on: ubuntu-latest
       steps:
