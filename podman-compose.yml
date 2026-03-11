@@ -2,8 +2,6 @@ services:
   django:
     image: ghcr.io/aeshemi1/portfolio:latest
     container_name: portfolio-docker
-    ports:
-      - "9000:8000"
     expose:
       - "9000"
     environment:
