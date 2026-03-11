@@ -82,7 +82,6 @@ jobs:
         category: "/language:python"
 
   build-test:
-      needs: test
       if: |
         github.event_name == 'pull_request' || 
         inputs.run_tests == true
