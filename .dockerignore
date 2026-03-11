@@ -1,0 +1,42 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.coverage/
+.pylintrc
+
+# Django logs and media
+*.log
+media/
+db.sqlite3
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Docker build artifacts (if needed)
+.dockerignore
+Dockerfile
+podman-compose.yml
+
+# Git
+.git/
+.gitignore
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Existing static files
+staticfiles/
+postgres/
+nginx/
+certs/
+
+# Update script
+deploy.sh
+README.md
