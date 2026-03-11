@@ -51,7 +51,6 @@ jobs:
       env:
           DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       run: |
-        cd portfolio
         python -m manage collectstatic --noinput
         python -m manage test
 
