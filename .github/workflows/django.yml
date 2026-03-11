@@ -6,17 +6,17 @@ on:
   pull_request:
     branches: [ "master" ] 
   workflow_dispatch:
-      inputs:
-        run_tests:
-          description: 'Run Django Tests?'
-          default: true
-          type: boolean
-        build_docker:
-          description: 'Build and Push Docker Image?'
-          default: false
-          type: boolean
+    inputs:
+      run_tests:
+        description: 'Run Tests?'
+        default: true
+        type: boolean
+
 jobs:
   test:
+    if: |
+      github.event_name != 'workflow_dispatch' || 
+      inputs.run_tests == true
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false 
@@ -30,6 +30,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+        cache: 'pip'
 
     - name: Install Dependencies
       run: |
@@ -49,14 +50,33 @@ jobs:
 
     - name: Run Django Tests
       env:
-          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+        DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       run: |
         python -m manage collectstatic --noinput
         python -m manage test
 
+  build-test:
+      needs: test
+      if: |
+        github.event_name != 'workflow_dispatch' || 
+        inputs.run_tests == true
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test Docker Build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+
   build-docker:
-    needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: [test, build-test]
+    if: |
+      github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -71,7 +91,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Extract metadata (tags, labels) for Docker
+    - name: Extract metadata
       id: meta
       uses: docker/metadata-action@v5
       with:
