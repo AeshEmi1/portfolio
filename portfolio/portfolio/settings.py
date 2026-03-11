@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import decouple
 from pathlib import Path
 from decouple import config
 
@@ -21,7 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # Nice try!
-SECRET_KEY = config("SECRET_KEY")
+try:
+    SECRET_KEY = config("SECRET_KEY")
+except decouple.UndefinedValueError as e:
+    raise RuntimeError("SECRET_KEY is not set. Please set it in the .env file.") from e
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
