@@ -5,16 +5,14 @@ from django.http import HttpRequest
 
 def global_context(
     request: HttpRequest,
-) -> dict[
-    str, list[dict[str, list[str] | str]] | list[dict[str, str]] | list[str] | str
-]:
+) -> dict:
     """Context processor that provides global context for all templates.
 
     Args:
         request (HttpRequest): The HTTP request object.
 
     Returns:
-        dict[str, list[dict[str, list[str] | str]] | list[dict[str, str]] | list[str] | str]: The global context dictionary.
+        dict: The global context dictionary.
     """
     return {
         "title": "Emiliano Garcia | Cybersecurity Professional",
@@ -132,26 +130,73 @@ def global_context(
         ],
         "projects": [
             {
-                "name": "AexEnum",
-                "period": "02/2023 – Present",
-                "description": "A tool written in Python that automates reconnaissance.",
+                "name": "Personal Portfolio",
+                "period": "03/2026 – Present",
+                "description": "This site! Built with Django and Tailwind CSS, deployed via a CI/CD pipeline featuring automated security scans, tests, and Podman container builds.",
+                "url": "https://github.com/AeshEmi1/portfolio",
             },
             {
                 "name": "Home/VPS Lab",
                 "period": "01/2023 – Present",
-                "description": "Deployed Cowrie, an SSH honeypot. Configured Apache and MySQL servers to test blind XSS attacks.",
+                "description": "The Linux server hosting this site (and others)! Previously used as an SSH Honeypot. Is also used as a callback server for bug bounties.",
             },
             {
-                "name": "Bug Bounty Hunting",
-                "period": "01/2023 - Present",
-                "description": "Reported security vulnerabilities including broken access control and DoS vulnerability.",
+                "name": "Searxng-SE",
+                "period": "03/2025 - 08/2025",
+                "description": "A fork of SearxNG that added TLS support for the backend flask application.",
+                "url": "https://github.com/AeshEmi1/searxng-se",
             },
             {
-                "name": "TryHackMe & HackTheBox",
-                "period": "02/2022 – Present",
-                "description": "Learned manual SQL injections, web attacks, and offensive security tools.",
+                "name": "Bug Bounty Scripts",
+                "period": "03/2025 – 08/2025",
+                "description": "A collection of scripts used to automate reconnaissance. These tools focus on subdomain enumeration and origin discovery.",
+                "url": "https://github.com/AeshEmi1/bug-bounty-scripts",
             },
         ],
+        "defensive_engineering": {
+            "threat_mitigation_and_response": [
+                {
+                    "category": "DDoS Mitigation",
+                    "description": "Managed the emergency mitigation of a 1+ Tbps DDoS attack—one of the largest in Akamai’s history—utilizing advanced TLS Fingerprinting.",
+                },
+                {
+                    "category": "Vulnerability Research",
+                    "description": "Identified and documented broken access control and DoS vulnerabilities (CVE-2002–20001).",
+                },
+                {
+                    "category": "Identity Hardening",
+                    "description": "Scaled ITDR (Identity Threat Detection and Response) across 30,000+ devices to secure Active Directory and Entra ID.",
+                },
+            ],
+            "security_automation": [
+                {
+                    "category": "Governance as Code",
+                    "description": "Built a configuration validation tool in Python and Azure DevOps to audit WAF/CDN drift against organizational standards.",
+                },
+                {
+                    "category": "ML-Driven Defense",
+                    "description": "Developed a DLP false-positive analysis tool using K-Means clustering to optimize rule accuracy and reduce alert fatigue.",
+                },
+                {
+                    "category": "Pipeline Automation",
+                    "description": "Architected a hybrid IaC pipeline using Terraform to automate Akamai CDN onboardings, reducing deployment time from hours to minutes.",
+                },
+            ],
+            "tooling_and_platforms": [
+                {
+                    "category": "Core Stack",
+                    "description": "Expert-level utilization of Python, Github Actions and Azure DevOps, Linux, Akamai WAF and CDN, and Trellix DLP.",
+                },
+                {
+                    "category": "Frameworks",
+                    "description": "Implementation of ZTNA, mTLS, and CIS Benchmarks across enterprise Linux and Windows environments.",
+                },
+                {
+                    "category": "Continuous Learning",
+                    "description": "Active labs on TryHackMe and HackTheBox; holder of GSEC, GCLD, and CCNA.",
+                },
+            ],
+        },
         "email": "jobs@emilspace.com",
         "linkedin": "https://www.linkedin.com/in/emiliano-garcia000/",
         "github": "https://github.com/AeshEmi1",
