@@ -14,7 +14,7 @@ services:
       - .env
 
   nginx:
-    image: nginx:alpine
+    image: docker.io/library/nginx:alpine
     ports:
       - "9001:80" # HTTP
       - "9002:443" # HTTPS
