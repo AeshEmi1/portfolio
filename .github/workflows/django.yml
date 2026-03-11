@@ -44,7 +44,7 @@ jobs:
       if: matrix.python-version == '3.13'
       run: black --check .
 
-    - name: Security scan with Bandit (3.13 Only)
+    - name: Quick security scan with Bandit (3.13 Only)
       if: matrix.python-version == '3.13'
       run: bandit -r .
 
@@ -54,6 +54,28 @@ jobs:
       run: |
         python -m manage collectstatic --noinput
         python -m manage test
+
+  security-scan:
+    name: Analyze (CodeQL)
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: python, javascript-typescript
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:python"
 
   build-test:
       needs: test
