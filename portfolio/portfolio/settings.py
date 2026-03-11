@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-import decouple
+import os
 import decouple
 from pathlib import Path
 from decouple import config
@@ -25,6 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Nice try!
 try:
     SECRET_KEY = config("DJANGO_SECRET_KEY")
+    if not SECRET_KEY:
+        raise RuntimeError("Empty DJANGO_SECRET_KEY. Checking environment variables...")
+except RuntimeError as e:
+    SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+    if not SECRET_KEY:
+        raise RuntimeError("Empty DJANGO_SECRET_KEY in environment variables.") from e
 except decouple.UndefinedValueError as e:
     raise RuntimeError(
         "DJANGO_SECRET_KEY is not set. Please set it in the .env file."
