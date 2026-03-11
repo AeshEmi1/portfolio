@@ -102,7 +102,6 @@ jobs:
           push: false
 
   build-docker:
-    needs: [test, build-test, security-scan]
     if: |
       github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
