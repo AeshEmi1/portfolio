@@ -42,6 +42,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
  
 # BUILD static images, static files will be located at /app/staticfiles
+ENV DJANGO_SECRET_KEY="build-time-dummy-key"
 RUN python -m manage collectstatic --noinput
 
 # Switch to non-root user
