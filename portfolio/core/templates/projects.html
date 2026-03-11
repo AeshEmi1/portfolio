@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-8 mb-20">
+        {% for project in projects %}
+        <div class="glass-panel p-8 rounded-[2rem] hover:-translate-y-2 transition duration-300 group">
+            <span class="text-xs font-mono text-brand-accent uppercase tracking-widest">{{ project.period }}</span>
+            <h3 class="text-2xl font-bold mt-2 mb-4 text-white">{{ project.name }}</h3>
+            <p class="text-zinc-400 leading-relaxed">{{ project.description }}</p>
+            <div class="mt-6 flex gap-4">
+                <a href="#" class="text-sm font-bold flex items-center gap-2 text-zinc-300 hover:text-brand-accent transition">
+                    Source <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="bg-gradient-to-br from-brand-accent/10 to-transparent border border-white/10 p-10 rounded-[2.5rem] backdrop-blur-md">
+        <h2 class="text-3xl font-bold mb-8 text-white">Security Research</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="space-y-4">
+                <h4 class="font-bold text-brand-accent">Findings</h4>
+                <p class="text-sm text-zinc-300">Broken access control and DoS vulnerabilities (CVE-2002-20001).</p>
+            </div>
+            <div class="space-y-4">
+                <h4 class="font-bold text-brand-accent">Tooling</h4>
+                <p class="text-sm text-zinc-300">Burp Suite, OWASP Zap, Shodan, and Nuclei.</p>
+            </div>
+            <div class="space-y-4">
+                <h4 class="font-bold text-brand-accent">Platforms</h4>
+                <p class="text-sm text-zinc-300">Active labs on TryHackMe and HackTheBox.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

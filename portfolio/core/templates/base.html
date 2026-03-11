@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            black: '#09090b',
+                            card: '#121214',
+                            accent: '#6366f1',
+                            border: '#27272a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            /* Dot Matrix Background - Lightened from #27272a to #333338 */
+            .dot-bg {
+                background-image: radial-gradient(#333338 1px, transparent 1px);
+                background-size: 24px 24px;
+                mask-image: radial-gradient(ellipse at center, black 40%, transparent 95%);
+            }
+            /* Glass Utility - Slightly more opaque for better legibility */
+            .glass-panel {
+                @apply bg-brand-card/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+            }
+            /* Nav Hidden State */
+            .nav-hidden {
+                @apply -translate-y-[150%] opacity-0;
+            }
+        }
+    </style>
+</head>
+    <body class="bg-brand-black text-zinc-200 antialiased selection:bg-brand-accent/30 flex flex-col min-h-screen">
+
+        <div class="fixed inset-0 dot-bg pointer-events-none -z-10"></div>
+
+        <nav id="navbar" class="fixed top-8 left-0 right-0 z-50 flex justify-center px-6 transition-all duration-500 ease-in-out">
+            <div class="glass-panel rounded-full p-2 flex items-center">
+                <a href="{% url 'index' %}" class="px-5 py-2 text-sm font-medium text-zinc-400 hover:text-white transition">Home</a>
+                <a href="{% url 'projects' %}" class="px-5 py-2 text-sm font-medium text-zinc-400 hover:text-white transition">Projects</a>
+                <a href="{% url 'contact' %}" class="px-5 py-2 text-sm font-medium text-zinc-400 hover:text-white transition">Contact</a>
+            </div>
+        </nav>
+
+        <main class="pt-48 pb-20 px-6 max-w-7xl mx-auto flex flex-col items-center flex-grow w-full">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="py-16 border-t border-brand-border/30 flex flex-col items-center gap-4 w-full">
+            <div class="flex gap-8 text-sm font-medium">
+                <a href="{{ github }}" class="text-zinc-400 hover:text-white transition">GitHub</a>
+                <a href="{{ linkedin }}" class="text-zinc-400 hover:text-white transition">LinkedIn</a>
+            </div>
+            <p class="text-[10px] uppercase tracking-widest text-zinc-500">© 2026 Emiliano Garcia</p>
+        </footer>
+
+        <script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>
