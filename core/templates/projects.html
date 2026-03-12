@@ -15,7 +15,7 @@
             <p class="text-zinc-400 leading-relaxed">{{ project.description }}</p>
             <div class="mt-6 flex gap-4">
                 {% if project.url %}
-                <a href="{{ project.url }}" class="text-sm font-bold flex items-center gap-2 text-zinc-300 hover:text-brand-accent transition">
+                <a href="{{ project.url }}" target="_blank" class="text-sm font-bold flex items-center gap-2 text-zinc-300 hover:text-brand-accent transition">
                     Source <i class="fab fa-github"></i>
                 </a>
                 {% endif %}
